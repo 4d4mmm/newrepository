@@ -606,7 +606,7 @@ function expandReplaceRange(block, lines, isJsx) {
   // outer `</div>` orphaned after accept/discard. Single regex with
   // `[^>]*?` (which spans newlines in JS) handles either form correctly.
   const joined = lines.slice(start).join('\n');
-  // Match either `<div \u2026 />` (self-close, group 1 is `/`), `<div \u2026 >`
+  // Match either `<div … />` (self-close, group 1 is `/`), `<div … >`
   // (open, group 1 is empty), or `</div>`.
   const tagRe = /<div\b[^>]*?(\/?)>|<\/div\s*>/g;
   let depth = 0;
@@ -649,8 +649,8 @@ function hasVariantWrapperAttr(line, id) {
  *   - CSS `@scope ([data-impeccable-variant="N"])` strings that look like the
  *     HTML marker we're searching for
  *   - JSX self-closing `<style ... />` (no separate `</style>` to close on)
- *   - Same-line `<style>\u2026</style>` blocks
- *   - Multi-line `<style>\n\u2026\n</style>` blocks
+ *   - Same-line `<style>…</style>` blocks
+ *   - Multi-line `<style>\n…\n</style>` blocks
  */
 function stripStyleAndJoin(lines, block) {
   const out = [];
@@ -687,7 +687,7 @@ function stripStyleAndJoin(lines, block) {
 }
 
 /**
- * Find the inner content of `<TAG ...attrMatch...>\u2026</TAG>` inside `text`,
+ * Find the inner content of `<TAG ...attrMatch...>…</TAG>` inside `text`,
  * handling nested same-tag elements via depth counting. `attrMatch` is a
  * regex source fragment that must appear inside the opener tag.
  * Returns the inner string (may be empty), or null if not found.
@@ -701,7 +701,7 @@ function extractInnerByAttr(text, attrMatch) {
   const innerStart = openMatch.index + openMatch[0].length;
 
   // Match any opener or closer of this tag name after innerStart.
-  // (Does not match self-closing <TAG \u2026 />, which doesn't contribute to depth.)
+  // (Does not match self-closing <TAG … />, which doesn't contribute to depth.)
   const tagRe = new RegExp('<(?:/)?' + tagName + '\\b[^>]*>', 'g');
   tagRe.lastIndex = innerStart;
 
@@ -751,9 +751,9 @@ function extractVariant(lines, block, variantNum) {
  * Returns an array of CSS lines, or null if no style block found.
  *
  * Handles three shapes of `<style data-impeccable-css="ID" ...>`:
- *   1. Self-closing: `<style ... />` \u2014 no body; return null (nothing to carbonize).
- *   2. Same-line open+close: `<style>...</style>` \u2014 return the inner content.
- *   3. Multi-line: `<style>` on one line, `</style>` on a later line \u2014 return
+ *   1. Self-closing: `<style ... />` — no body; return null (nothing to carbonize).
+ *   2. Same-line open+close: `<style>...</style>` — return the inner content.
+ *   3. Multi-line: `<style>` on one line, `</style>` on a later line — return
  *      the lines between them.
  */
 function extractCss(lines, block, id) {
@@ -778,7 +778,7 @@ function extractCss(lines, block, id) {
     }
 
     if (inStyle) {
-      // Detect </style> anywhere on the line \u2014 JSX template-literal closes
+      // Detect </style> anywhere on the line — JSX template-literal closes
       // (`}</style>`) put the close mid-line, and we don't want to absorb the
       // template-literal punctuation as CSS content.
       const closeIdx = line.indexOf('</style>');
@@ -792,15 +792,15 @@ function extractCss(lines, block, id) {
 }
 
 /**
- * Strip a JSX template-literal wrap (`{` \u2026 `}`) from CSS extracted out of a
+ * Strip a JSX template-literal wrap (`{` … `}`) from CSS extracted out of a
  * `<style>` element in a JSX/TSX file. The agent may write the wrap with
  * `{` and `}` directly attached to the `<style>` tags, on their own lines,
- * or attached to the first/last CSS lines \u2014 all three are JSX-legal.
+ * or attached to the first/last CSS lines — all three are JSX-legal.
  *
  * Stripping is required because handleAccept re-wraps the CSS itself when
  * carbonizing. Without this, two consecutive accepts (or a previously-
  * accepted variants block being carbonized) would produce nested
- * `{` `{` \u2026 `}` `}`, which oxc rejects with "Expected `}` but found `@`".
+ * `{` `{` … `}` `}`, which oxc rejects with "Expected `}` but found `@`".
  */
 function stripJsxTemplateLines(content) {
   const out = content.slice();

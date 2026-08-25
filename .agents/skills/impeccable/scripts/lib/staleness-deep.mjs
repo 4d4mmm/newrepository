@@ -70,7 +70,7 @@ function git(args, cwd) {
   }
 }
 
-// ─── DESIGN.md truth drift ─────────────────────────────────────────────────────────────────
+// ─── DESIGN.md truth drift ─────────────────────────────────────────────────
 
 /**
  * How much UI work has landed since DESIGN.md was last touched, measured in
@@ -162,7 +162,7 @@ export function checkDesignCoverage({ design, designPath, parseDesignMd }) {
   })];
 }
 
-// ─── detector ignore lists ───────────────────────────────────────────────────────────────
+// ─── detector ignore lists ─────────────────────────────────────────────────
 
 /**
  * Ignore entries that no longer match anything: rule ids the engine dropped or
@@ -219,7 +219,7 @@ export function checkDetectorIgnores({ projectRoot, knownRuleIds = null }) {
   return findings;
 }
 
-// ─── hook installation ─────────────────────────────────────────────────────────────────
+// ─── hook installation ─────────────────────────────────────────────────────
 
 function collectHookCommands(value, out = []) {
   if (typeof value === 'string') {
@@ -256,7 +256,7 @@ function hookScriptTokenFrom(command) {
   if (!HOOK_MARKER.test(str)) return null;
   const quoted = str.match(/"([^"]*skills\/impeccable\/scripts\/hook(?:-before-edit)?\.mjs)"/);
   if (quoted) return quoted[1];
-  // A path containing an apostrophe serializes as '\'' inside single quotes;
+  // A path containing an apostrophe serializes as '\'\'' inside single quotes;
   // no regex reassembles that, and the bare fallback would misread a fragment
   // of it, so return null: the caller never asserts on a path it can't parse.
   if (str.includes("'\\''")) return null;
@@ -365,7 +365,7 @@ export function checkHookInstallation({ projectRoot, repoRoot, providerId }) {
   return findings;
 }
 
-// ─── retired locations ─────────────────────────────────────────────────────────────────
+// ─── retired locations ─────────────────────────────────────────────────────
 
 export function checkLegacyLiveState({ projectRoot }) {
   if (!projectRoot) return [];
@@ -383,7 +383,7 @@ export function checkLegacyLiveState({ projectRoot }) {
   })];
 }
 
-// ─── monorepo sweep ────────────────────────────────────────────────────────────────────
+// ─── monorepo sweep ────────────────────────────────────────────────────────
 
 /**
  * Per-workspace context, plus the case worth acting on: a workspace with
@@ -458,7 +458,7 @@ export function checkWorkspaces({ repoRoot, candidates = [], checkNativePlatform
   return { findings, workspaces };
 }
 
-// ─── rule registry ─────────────────────────────────────────────────────────────────────
+// ─── rule registry ─────────────────────────────────────────────────────────
 
 /**
  * Rule ids from the bundled detector, or null when it cannot be resolved (a

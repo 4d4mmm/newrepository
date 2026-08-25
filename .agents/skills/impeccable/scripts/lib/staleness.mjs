@@ -152,7 +152,7 @@ function toRelative(filePath, root) {
     : filePath;
 }
 
-// ─── PRODUCT.md ─────────────────────────────────────────────────────────────────────
+// ─── PRODUCT.md ────────────────────────────────────────────────────────────
 
 /**
  * Pure: schema drift visible in a PRODUCT.md body. `productPath` is used for
@@ -246,7 +246,7 @@ export function checkNativePlatformEvidence({ projectRoot, platform, product, pr
   })];
 }
 
-// ─── DESIGN.md and the design.json sidecar ─────────────────────────────────────────────────────
+// ─── DESIGN.md and the design.json sidecar ─────────────────────────────────
 
 /**
  * Sidecar drift: retired location, schema version behind, or older than the
@@ -310,7 +310,7 @@ export function checkDesignSidecar({ designPath, sidecarCandidates = [], project
   return findings;
 }
 
-// ─── .impeccable/config.json ───────────────────────────────────────────────────────────
+// ─── .impeccable/config.json ───────────────────────────────────────────────
 
 /**
  * Unrecognized keys in the shared and local configs. A key nothing reads is
@@ -415,7 +415,7 @@ export function checkBuildPathUnset({ projectRoot, repoRoot, product }) {
   })];
 }
 
-// ─── Surface briefs ────────────────────────────────────────────────────────────────────
+// ─── Surface briefs ────────────────────────────────────────────────────────
 
 /**
  * A brief whose primary target no longer exists still resolves and still gets
@@ -444,7 +444,7 @@ export function checkSurfaceBriefs({ candidates = [], projectRoot }) {
   })];
 }
 
-// ─── Monorepo structure ────────────────────────────────────────────────────────────────
+// ─── Monorepo structure ────────────────────────────────────────────────────
 
 /**
  * `projectRoots` globs that match no directory. When every pattern misses,
@@ -485,7 +485,7 @@ export function describeWorkspaceContext(candidates = []) {
   }));
 }
 
-// ─── Tier 1 orchestration ──────────────────────────────────────────────────────────────
+// ─── Tier 1 orchestration ──────────────────────────────────────────────────
 
 /**
  * Everything a boot can afford, grouped by artifact so deeper reports can
